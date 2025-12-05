@@ -1,38 +1,7 @@
 package org.example;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.List;
-
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    //TODO:
-//        Muss-Kriterien (Basis):
-//        mindestens 8 Zeichen, => CHECK
-//        mindestens eine Ziffer (0–9), CHECK
-//        Groß- und Kleinbuchstaben (beides muss vorkommen), CHECK
-//        nicht in einer Liste häufiger/schwacher Passwörter. CHECK
-//        Optional (Bonus-Policy):
-//        mindestens ein Sonderzeichen (definiere erlaubte Menge),
-//        Mindestanzahl unterschiedlicher Zeichengruppen (z. B. 3 von 4: Groß, Klein, Ziffer, Sonderzeichen).
-    // MAVEN CI
 
-
-    public static boolean checkForWeakPassword()  {
-    return false;
-    }
-
-    /**
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-
-
-    }
 
     /**
      * Prüfung auf Passwortlänge von mindestens 8
@@ -47,15 +16,12 @@ public class Main {
     /**
      * Prüfung auf vorhandene Zahlen im Passwort
      *
-     * @param password  Passwort das übergeben wird
-     * @param minDigits Minimum an Zahlen die im Passwort sein müssen
-     * @param maxDigits Maximum an Zahlen die im Passwort sein dürfen
+     * @param password Passwort das übergeben wird
      * @return zerlegt den String in eine Charsequence, filtert nach Zahlen, zählt diese und prüft die Min Max Werte
      * und nur wenn beide Werte passen '&&' liefert der return TRUE
      */
-    public static boolean checkForDigitsInPassword(String password, int minDigits, int maxDigits) {
-        return password.chars().filter(Character::isDigit).count() >= minDigits
-                && password.chars().filter(Character::isDigit).count() <= maxDigits;
+    public static long checkForDigitsInPassword(String password) {
+        return password.chars().filter(Character::isDigit).count();
     }
 
     /**
@@ -65,6 +31,24 @@ public class Main {
      * @return
      */
     public static boolean checkForUpperLowerCase(String password) {
-        return password.chars().anyMatch(Character::isUpperCase) && password.chars().anyMatch(Character::isLowerCase);
+        return password.matches(".*[A-Z].*") && password.matches(".*[a-z].*");
+    }
+
+    public static void main(String[] args) {
+        boolean valid = false;
+        String testPassword = "paAs3swaqs";
+
+        while (!valid) {
+            if (checkPasswordLength(testPassword)
+                    && checkForDigitsInPassword(testPassword) > 0
+                    && checkForUpperLowerCase(testPassword)) {
+                valid = true;
+            } else {
+                System.out.println("Passwort erfüllt nicht die Vorgaben!");
+                break;
+            }
+            System.out.println("Passwort akzeptiert!");
+        }
+
     }
 }
