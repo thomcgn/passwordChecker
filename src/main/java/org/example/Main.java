@@ -1,5 +1,9 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 public class Main {
 
 
@@ -36,7 +40,7 @@ public class Main {
 
     public static void main(String[] args) {
         boolean valid = false;
-        String testPassword = "paAs3swaqs";
+        String testPassword = "murd3er!sCr1m3";
 
         while (!valid) {
             if (checkPasswordLength(testPassword)
@@ -47,7 +51,9 @@ public class Main {
                 System.out.println("Passwort erfüllt nicht die Vorgaben!");
                 break;
             }
-            System.out.println("Passwort akzeptiert!");
+            //System.out.println("Passwort akzeptiert!");
+            PasswordBcryptService weakCheck = new PasswordBcryptService(new ArrayList<>(List.of(testPassword)));
+            System.out.println(weakCheck.checkIfPasswordIsWeak(testPassword));
         }
 
     }
